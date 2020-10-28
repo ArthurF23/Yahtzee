@@ -2,6 +2,9 @@
 // If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
 // Read online: https://github.com/ocornut/imgui/tree/master/docs
 #pragma disable(warning: 4996)
+
+//#include <fstream>
+//#include <cstdint>
 #include <random>
 #include <chrono>
 #include <string>
@@ -148,7 +151,7 @@ struct MAINWINDOW {
 };
 
 struct CARD_SIZE {
-    int WIDTH = 300;
+    int WIDTH = 400;
     int HEIGHT = 500;
 };
 
@@ -590,33 +593,57 @@ int main(int, char**)
                 ImGui::Text(to_string(pointer->turns_taken).c_str());
                 if (ImGui::TreeNode("Upper Section")) {
                     //ImGui::Text("Upper Section");
-
+                    
+                    HelpMarker("Count and add only Aces");
+                    ImGui::SameLine();
                     ImGui::Text("Aces:  ");
                     ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
                     ImGui::InputText(" ", pointer->player_inputs_1, IM_ARRAYSIZE(pointer->player_inputs_1));
+                    
 
                     //ImGui::NewLine();
+                    HelpMarker("Count and add only Twos");
+                    ImGui::SameLine();
                     ImGui::Text("Twos:  ");
 
                     ImGui::SameLine();
 
                     ImGui::InputText("  ", pointer->player_inputs_2, IM_ARRAYSIZE(pointer->player_inputs_2));
+                    
+                   
+                    HelpMarker("Count and add only Threes");
+                    ImGui::SameLine();
                     //ImGui::InputTextWithHint("Twos", "input", player_1_inputs, IM_ARRAYSIZE(player_1_inputs), ImGuiInputTextFlags_Password);
                     ImGui::Text("Threes:");
                     ImGui::SameLine();
                     ImGui::InputText("   ", pointer->player_inputs_3, IM_ARRAYSIZE(pointer->player_inputs_3));
+                    
+                    
 
+                    HelpMarker("Count and add only Fours");
+                    ImGui::SameLine();
                     ImGui::Text("Fours: ");
                     ImGui::SameLine();
                     ImGui::InputText("    ", pointer->player_inputs_4, IM_ARRAYSIZE(pointer->player_inputs_4));
+                    
+                    
 
+                    HelpMarker("Count and add only Fives");
+                    ImGui::SameLine();
                     ImGui::Text("Fives: ");
                     ImGui::SameLine();
                     ImGui::InputText("     ", pointer->player_inputs_5, IM_ARRAYSIZE(pointer->player_inputs_5));
+                    
+                    
 
+                    HelpMarker("Count and add only Sixes");
+                    ImGui::SameLine();
                     ImGui::Text("Sixes: ");
                     ImGui::SameLine();
                     ImGui::InputText("      ", pointer->player_inputs_6, IM_ARRAYSIZE(pointer->player_inputs_6));
+                    
+                    
+
 
                     ImGui::Text("Total -> ");
 
@@ -637,6 +664,9 @@ int main(int, char**)
                     ImGui::SameLine();
                     int total_score_player_1_upper = s[0] + s[1] + s[2] + s[3] + s[4] + s[5];//stoi(player_1_inputs_1) + stoi(player_1_inputs_2) + stoi(player_1_inputs_3) + stoi(player_1_inputs_4) + stoi(player_1_inputs_5);
                     ImGui::Text(to_string(total_score_player_1_upper).c_str());
+                    ImGui::SameLine();
+                    HelpMarker("Total of upper without bonus");
+
                     ImGui::Text("Bonus -> ");
                     ImGui::SameLine();
                     if (total_score_player_1_upper >= 63) {
@@ -646,43 +676,73 @@ int main(int, char**)
                     else {
                         ImGui::Text("0");
                     }
+                    ImGui::SameLine();
+                    HelpMarker("Bonus Points");
+
 
                     ImGui::Text("Grand total (Upper) -> ");
                     ImGui::SameLine();
                     ImGui::Text(to_string(total_score_player_1_upper).c_str());
+                    ImGui::SameLine();
+                    HelpMarker("Grand Total of Upper");
+
                     pointer->upper_score = total_score_player_1_upper;
                 };
 
                 if (ImGui::TreeNode("Lower Section")) {
                     //ImGui::Text("Upper Section");
-
+                    HelpMarker("Add Total of all dice");
+                    ImGui::SameLine();
                     ImGui::Text("3 of a kind:  ");
                     ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
                     ImGui::InputText(" ", pointer->three_of_kind, IM_ARRAYSIZE(pointer->three_of_kind));
+                   
+                   
 
+                    HelpMarker("Add Total of all dice");
+                    ImGui::SameLine();
                     ImGui::Text("4 of a kind:  ");
                     ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
                     ImGui::InputText("  ", pointer->four_of_kind, IM_ARRAYSIZE(pointer->four_of_kind));
+                    
+                    
+
 
                     //ImGui::Text("3 of a kind");
                     
                     ImGui::Checkbox("Full House", &pointer->fullhouse);
+                    ImGui::SameLine();
+                    HelpMarker("Score +25");
+
 
                     
                     ImGui::Checkbox("SM Straight", &pointer->sm_straight);
+                    ImGui::SameLine();
+                    HelpMarker("Score +30");
+
 
                     
                     ImGui::Checkbox("LG Straight", &pointer->lg_straight);
+                    ImGui::SameLine();
+                    HelpMarker("Score +40");
                     
                     ImGui::Checkbox("Yahtzee", &pointer->scored_yahtzee);
-                   
+                    ImGui::SameLine();
+                    HelpMarker("Score +50");
+                    HelpMarker("Add Total of all 5 dice");
+                    ImGui::SameLine();
                     ImGui::Text("Chance");
                     ImGui::SameLine();
                     ImGui::InputText("        ", pointer->chance, IM_ARRAYSIZE(pointer->chance));
-
+                    
+                   
+                    HelpMarker("Score +100 each (max 4)");
+                    ImGui::SameLine();
                     ImGui::Text("Yahtzee Bonus");
                     ImGui::SameLine();
                     ImGui::SliderInt("Yahtzee Bonus", &pointer->yahtzee_bonus, 0, 4);
+                    
+                    
                     int total_score_lower = 0;
 
                     int s[2];
@@ -718,10 +778,14 @@ int main(int, char**)
                     ImGui::Text("Grand Total (Lower) -> ");
                     ImGui::SameLine();
                     ImGui::Text(to_string(pointer->lower_score).c_str());
+                    ImGui::SameLine();
+                    HelpMarker("Grand Total of lower");
                     pointer->total_score = pointer->lower_score + pointer->upper_score;
                     ImGui::Text("GRAND TOTAL -> ");
                     ImGui::SameLine();
                     ImGui::Text(to_string(pointer->total_score).c_str());
+                    ImGui::SameLine();
+                    HelpMarker("Grand Total of both upper and lower");
                     
                 };
 
@@ -739,32 +803,56 @@ int main(int, char**)
             if (ImGui::TreeNode("Upper Section")) {
                 //ImGui::Text("Upper Section");
 
+                HelpMarker("Count and add only Aces");
+                ImGui::SameLine();
                 ImGui::Text("Aces:  ");
                 ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
                 ImGui::InputText(" ", pointer->player_inputs_1, IM_ARRAYSIZE(pointer->player_inputs_1));
 
+
                 //ImGui::NewLine();
+                HelpMarker("Count and add only Twos");
+                ImGui::SameLine();
                 ImGui::Text("Twos:  ");
 
                 ImGui::SameLine();
 
                 ImGui::InputText("  ", pointer->player_inputs_2, IM_ARRAYSIZE(pointer->player_inputs_2));
+
+
+                HelpMarker("Count and add only Threes");
+                ImGui::SameLine();
                 //ImGui::InputTextWithHint("Twos", "input", player_1_inputs, IM_ARRAYSIZE(player_1_inputs), ImGuiInputTextFlags_Password);
                 ImGui::Text("Threes:");
                 ImGui::SameLine();
                 ImGui::InputText("   ", pointer->player_inputs_3, IM_ARRAYSIZE(pointer->player_inputs_3));
 
+
+
+                HelpMarker("Count and add only Fours");
+                ImGui::SameLine();
                 ImGui::Text("Fours: ");
                 ImGui::SameLine();
                 ImGui::InputText("    ", pointer->player_inputs_4, IM_ARRAYSIZE(pointer->player_inputs_4));
 
+
+
+                HelpMarker("Count and add only Fives");
+                ImGui::SameLine();
                 ImGui::Text("Fives: ");
                 ImGui::SameLine();
                 ImGui::InputText("     ", pointer->player_inputs_5, IM_ARRAYSIZE(pointer->player_inputs_5));
 
+
+
+                HelpMarker("Count and add only Sixes");
+                ImGui::SameLine();
                 ImGui::Text("Sixes: ");
                 ImGui::SameLine();
                 ImGui::InputText("      ", pointer->player_inputs_6, IM_ARRAYSIZE(pointer->player_inputs_6));
+
+
+
 
                 ImGui::Text("Total -> ");
 
@@ -785,6 +873,9 @@ int main(int, char**)
                 ImGui::SameLine();
                 int total_score_player_1_upper = s[0] + s[1] + s[2] + s[3] + s[4] + s[5];//stoi(player_1_inputs_1) + stoi(player_1_inputs_2) + stoi(player_1_inputs_3) + stoi(player_1_inputs_4) + stoi(player_1_inputs_5);
                 ImGui::Text(to_string(total_score_player_1_upper).c_str());
+                ImGui::SameLine();
+                HelpMarker("Total of upper without bonus");
+
                 ImGui::Text("Bonus -> ");
                 ImGui::SameLine();
                 if (total_score_player_1_upper >= 63) {
@@ -794,43 +885,73 @@ int main(int, char**)
                 else {
                     ImGui::Text("0");
                 }
+                ImGui::SameLine();
+                HelpMarker("Bonus Points");
+
 
                 ImGui::Text("Grand total (Upper) -> ");
                 ImGui::SameLine();
                 ImGui::Text(to_string(total_score_player_1_upper).c_str());
+                ImGui::SameLine();
+                HelpMarker("Grand Total of Upper");
+
                 pointer->upper_score = total_score_player_1_upper;
             };
 
             if (ImGui::TreeNode("Lower Section")) {
                 //ImGui::Text("Upper Section");
-
+                HelpMarker("Add Total of all dice");
+                ImGui::SameLine();
                 ImGui::Text("3 of a kind:  ");
                 ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
                 ImGui::InputText(" ", pointer->three_of_kind, IM_ARRAYSIZE(pointer->three_of_kind));
 
+
+
+                HelpMarker("Add Total of all dice");
+                ImGui::SameLine();
                 ImGui::Text("4 of a kind:  ");
                 ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
                 ImGui::InputText("  ", pointer->four_of_kind, IM_ARRAYSIZE(pointer->four_of_kind));
 
+
+
+
                 //ImGui::Text("3 of a kind");
 
                 ImGui::Checkbox("Full House", &pointer->fullhouse);
+                ImGui::SameLine();
+                HelpMarker("Score +25");
+
 
 
                 ImGui::Checkbox("SM Straight", &pointer->sm_straight);
+                ImGui::SameLine();
+                HelpMarker("Score +30");
+
 
 
                 ImGui::Checkbox("LG Straight", &pointer->lg_straight);
+                ImGui::SameLine();
+                HelpMarker("Score +40");
 
                 ImGui::Checkbox("Yahtzee", &pointer->scored_yahtzee);
-
+                ImGui::SameLine();
+                HelpMarker("Score +50");
+                HelpMarker("Add Total of all 5 dice");
+                ImGui::SameLine();
                 ImGui::Text("Chance");
                 ImGui::SameLine();
                 ImGui::InputText("        ", pointer->chance, IM_ARRAYSIZE(pointer->chance));
 
+
+                HelpMarker("Score +100 each (max 4)");
+                ImGui::SameLine();
                 ImGui::Text("Yahtzee Bonus");
                 ImGui::SameLine();
                 ImGui::SliderInt("Yahtzee Bonus", &pointer->yahtzee_bonus, 0, 4);
+
+
                 int total_score_lower = 0;
 
                 int s[2];
@@ -866,10 +987,14 @@ int main(int, char**)
                 ImGui::Text("Grand Total (Lower) -> ");
                 ImGui::SameLine();
                 ImGui::Text(to_string(pointer->lower_score).c_str());
+                ImGui::SameLine();
+                HelpMarker("Grand Total of lower");
                 pointer->total_score = pointer->lower_score + pointer->upper_score;
                 ImGui::Text("GRAND TOTAL -> ");
                 ImGui::SameLine();
                 ImGui::Text(to_string(pointer->total_score).c_str());
+                ImGui::SameLine();
+                HelpMarker("Grand Total of both upper and lower");
 
             };
 
@@ -887,32 +1012,56 @@ int main(int, char**)
             if (ImGui::TreeNode("Upper Section")) {
                 //ImGui::Text("Upper Section");
 
+                HelpMarker("Count and add only Aces");
+                ImGui::SameLine();
                 ImGui::Text("Aces:  ");
                 ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
                 ImGui::InputText(" ", pointer->player_inputs_1, IM_ARRAYSIZE(pointer->player_inputs_1));
 
+
                 //ImGui::NewLine();
+                HelpMarker("Count and add only Twos");
+                ImGui::SameLine();
                 ImGui::Text("Twos:  ");
 
                 ImGui::SameLine();
 
                 ImGui::InputText("  ", pointer->player_inputs_2, IM_ARRAYSIZE(pointer->player_inputs_2));
+
+
+                HelpMarker("Count and add only Threes");
+                ImGui::SameLine();
                 //ImGui::InputTextWithHint("Twos", "input", player_1_inputs, IM_ARRAYSIZE(player_1_inputs), ImGuiInputTextFlags_Password);
                 ImGui::Text("Threes:");
                 ImGui::SameLine();
                 ImGui::InputText("   ", pointer->player_inputs_3, IM_ARRAYSIZE(pointer->player_inputs_3));
 
+
+
+                HelpMarker("Count and add only Fours");
+                ImGui::SameLine();
                 ImGui::Text("Fours: ");
                 ImGui::SameLine();
                 ImGui::InputText("    ", pointer->player_inputs_4, IM_ARRAYSIZE(pointer->player_inputs_4));
 
+
+
+                HelpMarker("Count and add only Fives");
+                ImGui::SameLine();
                 ImGui::Text("Fives: ");
                 ImGui::SameLine();
                 ImGui::InputText("     ", pointer->player_inputs_5, IM_ARRAYSIZE(pointer->player_inputs_5));
 
+
+
+                HelpMarker("Count and add only Sixes");
+                ImGui::SameLine();
                 ImGui::Text("Sixes: ");
                 ImGui::SameLine();
                 ImGui::InputText("      ", pointer->player_inputs_6, IM_ARRAYSIZE(pointer->player_inputs_6));
+
+
+
 
                 ImGui::Text("Total -> ");
 
@@ -933,6 +1082,9 @@ int main(int, char**)
                 ImGui::SameLine();
                 int total_score_player_1_upper = s[0] + s[1] + s[2] + s[3] + s[4] + s[5];//stoi(player_1_inputs_1) + stoi(player_1_inputs_2) + stoi(player_1_inputs_3) + stoi(player_1_inputs_4) + stoi(player_1_inputs_5);
                 ImGui::Text(to_string(total_score_player_1_upper).c_str());
+                ImGui::SameLine();
+                HelpMarker("Total of upper without bonus");
+
                 ImGui::Text("Bonus -> ");
                 ImGui::SameLine();
                 if (total_score_player_1_upper >= 63) {
@@ -942,43 +1094,73 @@ int main(int, char**)
                 else {
                     ImGui::Text("0");
                 }
+                ImGui::SameLine();
+                HelpMarker("Bonus Points");
+
 
                 ImGui::Text("Grand total (Upper) -> ");
                 ImGui::SameLine();
                 ImGui::Text(to_string(total_score_player_1_upper).c_str());
+                ImGui::SameLine();
+                HelpMarker("Grand Total of Upper");
+
                 pointer->upper_score = total_score_player_1_upper;
             };
 
             if (ImGui::TreeNode("Lower Section")) {
                 //ImGui::Text("Upper Section");
-
+                HelpMarker("Add Total of all dice");
+                ImGui::SameLine();
                 ImGui::Text("3 of a kind:  ");
                 ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
                 ImGui::InputText(" ", pointer->three_of_kind, IM_ARRAYSIZE(pointer->three_of_kind));
 
+
+
+                HelpMarker("Add Total of all dice");
+                ImGui::SameLine();
                 ImGui::Text("4 of a kind:  ");
                 ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
                 ImGui::InputText("  ", pointer->four_of_kind, IM_ARRAYSIZE(pointer->four_of_kind));
 
+
+
+
                 //ImGui::Text("3 of a kind");
 
                 ImGui::Checkbox("Full House", &pointer->fullhouse);
+                ImGui::SameLine();
+                HelpMarker("Score +25");
+
 
 
                 ImGui::Checkbox("SM Straight", &pointer->sm_straight);
+                ImGui::SameLine();
+                HelpMarker("Score +30");
+
 
 
                 ImGui::Checkbox("LG Straight", &pointer->lg_straight);
+                ImGui::SameLine();
+                HelpMarker("Score +40");
 
                 ImGui::Checkbox("Yahtzee", &pointer->scored_yahtzee);
-
+                ImGui::SameLine();
+                HelpMarker("Score +50");
+                HelpMarker("Add Total of all 5 dice");
+                ImGui::SameLine();
                 ImGui::Text("Chance");
                 ImGui::SameLine();
                 ImGui::InputText("        ", pointer->chance, IM_ARRAYSIZE(pointer->chance));
 
+
+                HelpMarker("Score +100 each (max 4)");
+                ImGui::SameLine();
                 ImGui::Text("Yahtzee Bonus");
                 ImGui::SameLine();
                 ImGui::SliderInt("Yahtzee Bonus", &pointer->yahtzee_bonus, 0, 4);
+
+
                 int total_score_lower = 0;
 
                 int s[2];
@@ -1014,10 +1196,14 @@ int main(int, char**)
                 ImGui::Text("Grand Total (Lower) -> ");
                 ImGui::SameLine();
                 ImGui::Text(to_string(pointer->lower_score).c_str());
+                ImGui::SameLine();
+                HelpMarker("Grand Total of lower");
                 pointer->total_score = pointer->lower_score + pointer->upper_score;
                 ImGui::Text("GRAND TOTAL -> ");
                 ImGui::SameLine();
                 ImGui::Text(to_string(pointer->total_score).c_str());
+                ImGui::SameLine();
+                HelpMarker("Grand Total of both upper and lower");
 
             };
 
@@ -1035,32 +1221,56 @@ int main(int, char**)
             if (ImGui::TreeNode("Upper Section")) {
                 //ImGui::Text("Upper Section");
 
+                HelpMarker("Count and add only Aces");
+                ImGui::SameLine();
                 ImGui::Text("Aces:  ");
                 ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
                 ImGui::InputText(" ", pointer->player_inputs_1, IM_ARRAYSIZE(pointer->player_inputs_1));
 
+
                 //ImGui::NewLine();
+                HelpMarker("Count and add only Twos");
+                ImGui::SameLine();
                 ImGui::Text("Twos:  ");
 
                 ImGui::SameLine();
 
                 ImGui::InputText("  ", pointer->player_inputs_2, IM_ARRAYSIZE(pointer->player_inputs_2));
+
+
+                HelpMarker("Count and add only Threes");
+                ImGui::SameLine();
                 //ImGui::InputTextWithHint("Twos", "input", player_1_inputs, IM_ARRAYSIZE(player_1_inputs), ImGuiInputTextFlags_Password);
                 ImGui::Text("Threes:");
                 ImGui::SameLine();
                 ImGui::InputText("   ", pointer->player_inputs_3, IM_ARRAYSIZE(pointer->player_inputs_3));
 
+
+
+                HelpMarker("Count and add only Fours");
+                ImGui::SameLine();
                 ImGui::Text("Fours: ");
                 ImGui::SameLine();
                 ImGui::InputText("    ", pointer->player_inputs_4, IM_ARRAYSIZE(pointer->player_inputs_4));
 
+
+
+                HelpMarker("Count and add only Fives");
+                ImGui::SameLine();
                 ImGui::Text("Fives: ");
                 ImGui::SameLine();
                 ImGui::InputText("     ", pointer->player_inputs_5, IM_ARRAYSIZE(pointer->player_inputs_5));
 
+
+
+                HelpMarker("Count and add only Sixes");
+                ImGui::SameLine();
                 ImGui::Text("Sixes: ");
                 ImGui::SameLine();
                 ImGui::InputText("      ", pointer->player_inputs_6, IM_ARRAYSIZE(pointer->player_inputs_6));
+
+
+
 
                 ImGui::Text("Total -> ");
 
@@ -1081,6 +1291,9 @@ int main(int, char**)
                 ImGui::SameLine();
                 int total_score_player_1_upper = s[0] + s[1] + s[2] + s[3] + s[4] + s[5];//stoi(player_1_inputs_1) + stoi(player_1_inputs_2) + stoi(player_1_inputs_3) + stoi(player_1_inputs_4) + stoi(player_1_inputs_5);
                 ImGui::Text(to_string(total_score_player_1_upper).c_str());
+                ImGui::SameLine();
+                HelpMarker("Total of upper without bonus");
+
                 ImGui::Text("Bonus -> ");
                 ImGui::SameLine();
                 if (total_score_player_1_upper >= 63) {
@@ -1090,43 +1303,73 @@ int main(int, char**)
                 else {
                     ImGui::Text("0");
                 }
+                ImGui::SameLine();
+                HelpMarker("Bonus Points");
+
 
                 ImGui::Text("Grand total (Upper) -> ");
                 ImGui::SameLine();
                 ImGui::Text(to_string(total_score_player_1_upper).c_str());
+                ImGui::SameLine();
+                HelpMarker("Grand Total of Upper");
+
                 pointer->upper_score = total_score_player_1_upper;
             };
 
             if (ImGui::TreeNode("Lower Section")) {
                 //ImGui::Text("Upper Section");
-
+                HelpMarker("Add Total of all dice");
+                ImGui::SameLine();
                 ImGui::Text("3 of a kind:  ");
                 ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
                 ImGui::InputText(" ", pointer->three_of_kind, IM_ARRAYSIZE(pointer->three_of_kind));
 
+
+
+                HelpMarker("Add Total of all dice");
+                ImGui::SameLine();
                 ImGui::Text("4 of a kind:  ");
                 ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
                 ImGui::InputText("  ", pointer->four_of_kind, IM_ARRAYSIZE(pointer->four_of_kind));
 
+
+
+
                 //ImGui::Text("3 of a kind");
 
                 ImGui::Checkbox("Full House", &pointer->fullhouse);
+                ImGui::SameLine();
+                HelpMarker("Score +25");
+
 
 
                 ImGui::Checkbox("SM Straight", &pointer->sm_straight);
+                ImGui::SameLine();
+                HelpMarker("Score +30");
+
 
 
                 ImGui::Checkbox("LG Straight", &pointer->lg_straight);
+                ImGui::SameLine();
+                HelpMarker("Score +40");
 
                 ImGui::Checkbox("Yahtzee", &pointer->scored_yahtzee);
-
+                ImGui::SameLine();
+                HelpMarker("Score +50");
+                HelpMarker("Add Total of all 5 dice");
+                ImGui::SameLine();
                 ImGui::Text("Chance");
                 ImGui::SameLine();
                 ImGui::InputText("        ", pointer->chance, IM_ARRAYSIZE(pointer->chance));
 
+
+                HelpMarker("Score +100 each (max 4)");
+                ImGui::SameLine();
                 ImGui::Text("Yahtzee Bonus");
                 ImGui::SameLine();
                 ImGui::SliderInt("Yahtzee Bonus", &pointer->yahtzee_bonus, 0, 4);
+
+
                 int total_score_lower = 0;
 
                 int s[2];
@@ -1162,10 +1405,14 @@ int main(int, char**)
                 ImGui::Text("Grand Total (Lower) -> ");
                 ImGui::SameLine();
                 ImGui::Text(to_string(pointer->lower_score).c_str());
+                ImGui::SameLine();
+                HelpMarker("Grand Total of lower");
                 pointer->total_score = pointer->lower_score + pointer->upper_score;
                 ImGui::Text("GRAND TOTAL -> ");
                 ImGui::SameLine();
                 ImGui::Text(to_string(pointer->total_score).c_str());
+                ImGui::SameLine();
+                HelpMarker("Grand Total of both upper and lower");
 
             };
 
