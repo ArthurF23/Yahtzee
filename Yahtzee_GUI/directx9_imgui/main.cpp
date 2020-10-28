@@ -2,9 +2,6 @@
 // If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
 // Read online: https://github.com/ocornut/imgui/tree/master/docs
 #pragma disable(warning: 4996)
-
-//#include <fstream>
-//#include <cstdint>
 #include <random>
 #include <chrono>
 #include <string>
