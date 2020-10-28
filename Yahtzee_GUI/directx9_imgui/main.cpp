@@ -18,7 +18,6 @@ using namespace std;
 #include "imgui.h"
 
 #include <d3d9.h>
-#include "Converter_table.h"
 #pragma comment (lib, "d3d9.lib") //Adds some thing that make d3d9.h work
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
