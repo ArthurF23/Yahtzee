@@ -99,6 +99,7 @@ public:
 
     void reset() {
         current_face = 0;
+        is_locked = false;
     }
 
 };
@@ -406,7 +407,7 @@ int main(int, char**)
                         }
 
                         else {
-                            times_rolled = times_rolled;
+                            times_rolled = times_rolled;                            
                         };
                     }
                 }
