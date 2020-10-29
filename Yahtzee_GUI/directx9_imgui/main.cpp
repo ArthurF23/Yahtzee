@@ -2,6 +2,8 @@
 // If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
 // Read online: https://github.com/ocornut/imgui/tree/master/docs
 #pragma disable(warning: 4996)
+#include "imgui.h"
+using namespace ImGui;
 
 #include <random>
 #include <chrono>
@@ -16,8 +18,7 @@ using namespace std;
 
 #include "imgui_impl_dx9.h"
 #include "imgui_impl_win32.h"
-#include "imgui.h"
-using namespace ImGui;
+
 #include <d3d9.h>
 #pragma comment (lib, "d3d9.lib") //Adds some thing that make d3d9.h work
 #define DIRECTINPUT_VERSION 0x0800
@@ -400,7 +401,7 @@ int main(int, char**)
 
         ImGui::PushStyleColor(ImGuiCol_Button, color_red);
         ImGui::PushStyleColor(ImGuiCol_ButtonHovered, color_red_active);
-        ImGui::PushStyleColor(ImGuiCol_ButtonActive, color_red_active);
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, color_red_slider);
 
         ImGui::PushStyleColor(ImGuiCol_SliderGrab, color_red_slider);
         ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, color_red_slider);
