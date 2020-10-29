@@ -3,8 +3,6 @@
 // Read online: https://github.com/ocornut/imgui/tree/master/docs
 #pragma disable(warning: 4996)
 
-//#include <fstream>
-//#include <cstdint>
 #include <random>
 #include <chrono>
 #include <string>
@@ -15,7 +13,7 @@
 #include <vector>
 #include <cstdio>
 using namespace std;
-//#include <memory>
+
 #include "imgui_impl_dx9.h"
 #include "imgui_impl_win32.h"
 #include "imgui.h"
@@ -300,6 +298,7 @@ bool bonus_player_1_card = false;
 //static char player_1_inputs_4[1024 * 16] = "0";
 
 //static char player_1_inputs_5[1024 * 16] = "0";
+
 // Main code
 int main(int, char**)
 {
@@ -390,7 +389,35 @@ int main(int, char**)
         ImGui_ImplDX9_NewFrame();
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
-        
+        //Set Colors
+        static ImVec4 color_red = ImVec4(255.0f, 0.0f, 0.0f, 1.0f);
+        static ImVec4 color_red_active = ImVec4(1.255f, 0.30f, 0.30f, 1.0f);
+        static ImVec4 color_red_slider = ImVec4(0.400f, 0.0f, 0.0f, 1.0f);
+        static ImVec4 color_red_background = ImVec4(0.300f, 0.0f, 0.0f, 1.0f);
+        ImGui::PushStyleColor(ImGuiCol_TitleBg, color_red_background);
+        ImGui::PushStyleColor(ImGuiCol_TitleBgActive, color_red);
+        ImGui::PushStyleColor(ImGuiCol_TitleBgCollapsed, color_red_slider);
+
+        ImGui::PushStyleColor(ImGuiCol_Button, color_red);
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, color_red_active);
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, color_red_active);
+
+        ImGui::PushStyleColor(ImGuiCol_SliderGrab, color_red_slider);
+        ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, color_red_slider);
+
+        ImGui::PushStyleColor(ImGuiCol_TextSelectedBg, color_red);
+
+        ImGui::PushStyleColor(ImGuiCol_HeaderHovered, color_red);
+        ImGui::PushStyleColor(ImGuiCol_HeaderActive, color_red_active);
+
+        ImGui::PushStyleColor(ImGuiCol_FrameBg, color_red);
+        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, color_red_active);
+        ImGui::PushStyleColor(ImGuiCol_FrameBgActive, color_red_active);
+
+        ImGui::PushStyleColor(ImGuiCol_ResizeGrip, color_red);
+        ImGui::PushStyleColor(ImGuiCol_ResizeGripHovered, color_red_active);
+        ImGui::PushStyleColor(ImGuiCol_ResizeGripActive, color_red_active);
+
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
         //if (show_demo_window)
         //ImGui::ShowDemoWindow(&show_demo_window);
@@ -403,7 +430,9 @@ int main(int, char**)
                 ImGui::SetNextWindowPos(ImVec2(10, 5));
                 ImGui::SetNextWindowSize(ImVec2(400, MAINWINDOW().HEIGHT - 100));
                 ImGui::Begin("Game", (bool*)false, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);                          // Create a window called "Hello, world!" and append into it.
-
+                //ImGuiCol_TitleBgActive
+                //ImGuiCol_TitleBg
+                //ImGuiCol_TitleBgCollapsed                
                 //ImGui::Text("Please select what you would like to do");               // Display some text (you can use a format strings too)
                 //ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
                 //ImGui::Checkbox("Settings Window", &show_settings_window);            
@@ -446,7 +475,7 @@ int main(int, char**)
                         };
                     }
                 }
-
+                //Dice Rendering
                 else {
                     if (ImGui::Button("Next Player's turn")) {
                         times_rolled = 0;                        
@@ -627,14 +656,16 @@ int main(int, char**)
         }
 
         if (GAMEOVER == true) {
-            ImGui::Begin("Game Over");
+            ImGui::Begin("Game Over");            
             int a = P_1->total_score;
             int b = P_2->total_score;
             int c = P_3->total_score;
             int d = P_4->total_score;
+            //Finds the largest score
             const int largest = (a > b) ? (a > c) ? (a > d) ? a : d : (c > d) ? c : d : (b > c) ? (b > d) ? b : d : (c > d) ? c : d;
             
             string winner;
+            //Finds who has the largest score
             if (largest == a) {
                 winner = "Player 1";
             }
@@ -1568,7 +1599,7 @@ int main(int, char**)
         g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
         g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
         g_pd3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
-        D3DCOLOR clear_col_dx = D3DCOLOR_RGBA((int)(clear_color.x * 255.0f), (int)(clear_color.y * 255.0f), (int)(clear_color.z * 255.0f), (int)(clear_color.w * 255.0f));
+        D3DCOLOR clear_col_dx = D3DCOLOR_RGBA((int)(clear_color.x * 255.0f), (int)(clear_color.y * 0.0f), (int)(clear_color.z * 0.0f), (int)(clear_color.w * 1.0f));
         g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, clear_col_dx, 1.0f, 0);
         if (g_pd3dDevice->BeginScene() >= 0)
         {
