@@ -2,6 +2,9 @@
 // If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
 // Read online: https://github.com/ocornut/imgui/tree/master/docs
 #pragma disable(warning: 4996)
+
+//#include <fstream>
+//#include <cstdint>
 #include <random>
 #include <chrono>
 #include <string>
@@ -16,7 +19,7 @@ using namespace std;
 #include "imgui_impl_dx9.h"
 #include "imgui_impl_win32.h"
 #include "imgui.h"
-
+using namespace ImGui;
 #include <d3d9.h>
 #pragma comment (lib, "d3d9.lib") //Adds some thing that make d3d9.h work
 #define DIRECTINPUT_VERSION 0x0800
@@ -151,6 +154,11 @@ struct MAINWINDOW {
 struct CARD_SIZE {
     int WIDTH = 400;
     int HEIGHT = 500;
+};
+
+struct HELP_WINDOW {
+    int WIDTH = 450;
+    int HEIGHT = 700;
 };
 
 
@@ -547,6 +555,47 @@ int main(int, char**)
             }
         }
 
+
+        {
+        //Help Window
+        ImGui::SetNextWindowPos(ImVec2(400 + 10 + CARD_SIZE().WIDTH, 5));
+        ImGui::SetNextWindowSize(ImVec2(HELP_WINDOW().WIDTH, HELP_WINDOW().HEIGHT));
+        ImGui::Begin("Help");
+        if (ImGui::TreeNode("Rules")) {
+            TextWrapped("Beginning with the starting player, players will take turns one at a time in clockwise order. The game consists of thirteen rounds and at the end of the thirteenth round then the game will end. (All the categories on the players’ score cards will be completely filled in at that point.)");
+            TextWrapped("At the start of a turn, the player takes all 5 dice and rolls them. They can then roll some or all of the dice up to two more times, setting aside any dice they’d like to keep and rerolling the rest. The dice can be scored after any of the rolls, but scoring the dice ends the player’s turn. Setting dice aside after one roll does not prevent one or more of them from being rolled again on any subsequent roll if the player so chooses.");
+            TextWrapped("Each player’s goal is to try and score as high as they can in one of the thirteen categories shown on their score card.");
+            TextWrapped("To score the dice, the player selects one of the categories on their score card and writes the score into it. Each category can be scored only once per game (except for the Yahtzee category). Categories can be filled in any order. A player must score the dice on their turn even if it turns out that there are no good categories remaining to score in. Once a category is filled it may not be changed.");
+            TextWrapped("A player may write a score of zero in any category if they have rolled no point-generating results or if they simply choose to do so. For example, a player could put a roll of 2-4-5-6-6 into the Ones category even though it would score zero points.");
+            TextWrapped("After marking their score on their score card, the player’s turn ends and play proceeds to the player on their left. Or in the case of the game, the next player that has been determined through RNG.");
+            TreePop();
+        };
+        if (ImGui::TreeNode("Scoring")) {
+            Text("Three of a kind -> Three of the same dice.");
+            NewLine();
+            Text("Four of a kind -> Four of the same dice.");
+            NewLine();
+            TextWrapped("Full House -> Three Dice of the same number. And a pair that are a different number from the three matching.");
+            NewLine();
+            TextWrapped("Small (Sm) Straight -> Any four consecutive numbers. (for example, 1-2-3-4)");
+            NewLine();
+            TextWrapped("Large (Lg) Straight -> Any five consecutive numbers. (for example, 1-2-3-4-5)");
+            NewLine();
+            TextWrapped("Yahtzee (5 of a kind) -> All five dice showing the same number... Any yahtzee after the fist yahtzee is worth 100 points, use the Yahtzee Bonus slider");
+            NewLine();
+            Text("Chance -> add up the faces of all dice");
+            NewLine();
+            NewLine();
+            BulletText("Special Yahtzee Scoring");
+            TextWrapped("If a player rolls a Yahtzee on their turn but they have already filled in the Yahtzee category in a previous turn, then special scoring rules apply:\nIf the player has already filled in their Yahtzee box with a score of 50, they receive a Yahtzee bonus of 100 additional points. However, if their\nYahtzee box was previously filled in with a score of zero then they don’t receive the Yahtzee bonus.\n\nThe player then selects another category (other than the Yahtzee category) to score the dice as normal.");
+            TextWrapped("If the category in the Upper Section that corresponds to the numbers in the Yahtzee is unused, then the player must use that category.");
+            TextWrapped("If the corresponding box in the Upper Section has been used already then the player may choose to score one of the unused boxes in the Lower Section. In this case, the Yahtzee that the player has rolled acts as a \"Joker\" so that it can be placed in the Full House, Small Straight, and Large Straight categories if the player so wishes, even though it may not meet the standard requirements for those categories.");
+            TreePop();
+        };
+
+        ImGui::End();
+        }
+
         if (GAMEOVER == true) {
             ImGui::Begin("Game Over");
             int a = P_1->total_score;
@@ -574,6 +623,28 @@ int main(int, char**)
             }
 
             ImGui::Text((winner + " wins!").c_str());
+            Text("Score -> ");
+            SameLine();
+            Text(to_string(largest).c_str());
+            NewLine();
+            NewLine();
+
+            Text("Player 1 Score ->");
+            SameLine();
+            Text(to_string(P_1->total_score).c_str());
+
+            Text("Player 2 Score ->");
+            SameLine();
+            Text(to_string(P_2->total_score).c_str());
+
+            Text("Player 3 Score ->");
+            SameLine();
+            Text(to_string(P_3->total_score).c_str());
+
+            Text("Player 4 Score ->");
+            SameLine();
+            Text(to_string(P_4->total_score).c_str());
+
             ImGui::End();
         }
 
@@ -685,6 +756,7 @@ int main(int, char**)
                     HelpMarker("Grand Total of Upper");
 
                     pointer->upper_score = total_score_player_1_upper;
+                    TreePop();
                 };
 
                 if (ImGui::TreeNode("Lower Section")) {
@@ -784,7 +856,7 @@ int main(int, char**)
                     ImGui::Text(to_string(pointer->total_score).c_str());
                     ImGui::SameLine();
                     HelpMarker("Grand Total of both upper and lower");
-                    
+                    TreePop();
                 };
 
                 ImGui::End();
@@ -894,6 +966,7 @@ int main(int, char**)
                 HelpMarker("Grand Total of Upper");
 
                 pointer->upper_score = total_score_player_1_upper;
+                TreePop();
             };
 
             if (ImGui::TreeNode("Lower Section")) {
@@ -993,7 +1066,7 @@ int main(int, char**)
                 ImGui::Text(to_string(pointer->total_score).c_str());
                 ImGui::SameLine();
                 HelpMarker("Grand Total of both upper and lower");
-
+                TreePop();
             };
 
             ImGui::End();
@@ -1103,6 +1176,7 @@ int main(int, char**)
                 HelpMarker("Grand Total of Upper");
 
                 pointer->upper_score = total_score_player_1_upper;
+                TreePop();
             };
 
             if (ImGui::TreeNode("Lower Section")) {
@@ -1202,7 +1276,7 @@ int main(int, char**)
                 ImGui::Text(to_string(pointer->total_score).c_str());
                 ImGui::SameLine();
                 HelpMarker("Grand Total of both upper and lower");
-
+                TreePop();
             };
 
             ImGui::End();
@@ -1312,6 +1386,7 @@ int main(int, char**)
                 HelpMarker("Grand Total of Upper");
 
                 pointer->upper_score = total_score_player_1_upper;
+                TreePop();
             };
 
             if (ImGui::TreeNode("Lower Section")) {
@@ -1411,7 +1486,7 @@ int main(int, char**)
                 ImGui::Text(to_string(pointer->total_score).c_str());
                 ImGui::SameLine();
                 HelpMarker("Grand Total of both upper and lower");
-
+                TreePop();
             };
 
             ImGui::End();
