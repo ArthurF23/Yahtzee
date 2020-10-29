@@ -142,8 +142,38 @@ public:
     char chance[1024 * 16] = "0";
 
     int yahtzee_bonus = 0;
-    
 
+    void reset() {
+        turns_taken = 0;
+        upper_score = 0;
+        lower_score = 0;
+        total_score = 0;
+        fullhouse = false;
+        sm_straight = false;
+        lg_straight = false;
+        scored_yahtzee = false;
+        yahtzee_bonus = 0;
+        for (int i = 0; i < 1024 * 16; i++) {
+            if (i == 0) {
+                player_inputs_1[i] = (char)"0";
+                player_inputs_2[i] = (char)"0";
+                player_inputs_3[i] = (char)"0";
+                player_inputs_4[i] = (char)"0";
+                player_inputs_5[i] = (char)"0";
+                player_inputs_6[i] = (char)"0";
+                chance[i] = (char)"0";
+            }
+            else {
+                player_inputs_1[i] = (char)"";
+                player_inputs_2[i] = (char)"";
+                player_inputs_3[i] = (char)"";
+                player_inputs_4[i] = (char)"";
+                player_inputs_5[i] = (char)"";
+                player_inputs_6[i] = (char)"";
+                chance[i] = (char)"";
+            };
+        };
+    };
 };
 
 struct MAINWINDOW {
@@ -644,6 +674,20 @@ int main(int, char**)
             Text("Player 4 Score ->");
             SameLine();
             Text(to_string(P_4->total_score).c_str());
+
+            if (Button("Play Again?")) {
+                P_1->reset();
+                P_2->reset();
+                P_3->reset();
+                P_4->reset();
+                GAMEOVER = false;
+                show_config_window = true;
+                Dice_1->reset();
+                Dice_2->reset();
+                Dice_3->reset();
+                Dice_4->reset();
+                Dice_5->reset();
+            }
 
             ImGui::End();
         }
