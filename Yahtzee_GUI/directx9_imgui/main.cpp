@@ -1595,7 +1595,7 @@ int main(int, char**)
             
             ImGui::Text("How many players?");
             ImGui::SameLine();
-            ImGui::SliderInt("slider int", &player_num, 1, 4);
+            ImGui::SliderInt("   ", &player_num, 1, 4);
             if (ImGui::Button("Start?")) {
 
 
