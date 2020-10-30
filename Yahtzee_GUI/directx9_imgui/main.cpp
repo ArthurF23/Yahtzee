@@ -289,6 +289,16 @@ void shift_player() {
 
 bool bonus_player_1_card = false;
 
+
+struct STYLE {
+    ImVec4 color_main = ImVec4(255.0f, 0.0f, 0.0f, 1.0f);
+    ImVec4 color_active = ImVec4(1.255f, 0.30f, 0.30f, 1.0f);
+    ImVec4 color_slider = ImVec4(0.400f, 0.0f, 0.0f, 1.0f);
+    ImVec4 color_background = ImVec4(0.300f, 0.0f, 0.0f, 1.0f);
+    ImGuiStyle& style_ptr = ImGui::GetStyle();
+};
+
+
 //1024 * 16
 //static char player_1_inputs_1[1024 * 16] = "0";
 
@@ -390,34 +400,34 @@ int main(int, char**)
         ImGui_ImplDX9_NewFrame();
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
-        //Set Colors
-        static ImVec4 color_red = ImVec4(255.0f, 0.0f, 0.0f, 1.0f);
-        static ImVec4 color_red_active = ImVec4(1.255f, 0.30f, 0.30f, 1.0f);
-        static ImVec4 color_red_slider = ImVec4(0.400f, 0.0f, 0.0f, 1.0f);
-        static ImVec4 color_red_background = ImVec4(0.300f, 0.0f, 0.0f, 1.0f);
-        ImGui::PushStyleColor(ImGuiCol_TitleBg, color_red_background);
-        ImGui::PushStyleColor(ImGuiCol_TitleBgActive, color_red);
-        ImGui::PushStyleColor(ImGuiCol_TitleBgCollapsed, color_red_slider);
+        //Set Colors and Styles
+        //cout << ImGui::GetWindowWidth() << " " << ImGui::GetWindowHeight() << endl;
+        STYLE().style_ptr.WindowRounding = 12.0f;
+        STYLE().style_ptr.FrameRounding = 12.0f;
+        STYLE().style_ptr.GrabRounding = 12.0f;
+        ImGui::PushStyleColor(ImGuiCol_TitleBg, STYLE().color_background);
+        ImGui::PushStyleColor(ImGuiCol_TitleBgActive, STYLE().color_main);
+        ImGui::PushStyleColor(ImGuiCol_TitleBgCollapsed, STYLE().color_slider);
 
-        ImGui::PushStyleColor(ImGuiCol_Button, color_red);
-        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, color_red_active);
-        ImGui::PushStyleColor(ImGuiCol_ButtonActive, color_red_slider);
+        ImGui::PushStyleColor(ImGuiCol_Button, STYLE().color_main);
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, STYLE().color_active);
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, STYLE().color_slider);
 
-        ImGui::PushStyleColor(ImGuiCol_SliderGrab, color_red_slider);
-        ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, color_red_slider);
+        ImGui::PushStyleColor(ImGuiCol_SliderGrab, STYLE().color_slider);
+        ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, STYLE().color_slider);
 
-        ImGui::PushStyleColor(ImGuiCol_TextSelectedBg, color_red);
+        ImGui::PushStyleColor(ImGuiCol_TextSelectedBg, STYLE().color_main);
 
-        ImGui::PushStyleColor(ImGuiCol_HeaderHovered, color_red);
-        ImGui::PushStyleColor(ImGuiCol_HeaderActive, color_red_active);
+        ImGui::PushStyleColor(ImGuiCol_HeaderHovered, STYLE().color_main);
+        ImGui::PushStyleColor(ImGuiCol_HeaderActive, STYLE().color_active);
 
-        ImGui::PushStyleColor(ImGuiCol_FrameBg, color_red);
-        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, color_red_active);
-        ImGui::PushStyleColor(ImGuiCol_FrameBgActive, color_red_active);
+        ImGui::PushStyleColor(ImGuiCol_FrameBg, STYLE().color_main);
+        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, STYLE().color_active);
+        ImGui::PushStyleColor(ImGuiCol_FrameBgActive, STYLE().color_active);
 
-        ImGui::PushStyleColor(ImGuiCol_ResizeGrip, color_red);
-        ImGui::PushStyleColor(ImGuiCol_ResizeGripHovered, color_red_active);
-        ImGui::PushStyleColor(ImGuiCol_ResizeGripActive, color_red_active);
+        ImGui::PushStyleColor(ImGuiCol_ResizeGrip, STYLE().color_main);
+        ImGui::PushStyleColor(ImGuiCol_ResizeGripHovered, STYLE().color_active);
+        ImGui::PushStyleColor(ImGuiCol_ResizeGripActive, STYLE().color_active);
 
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
         //if (show_demo_window)
@@ -436,16 +446,12 @@ int main(int, char**)
                 //ImGuiCol_TitleBgCollapsed                
                 //ImGui::Text("Please select what you would like to do");               // Display some text (you can use a format strings too)
                 //ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-                //ImGui::Checkbox("Settings Window", &show_settings_window);            
-
-                
-
+                //ImGui::Checkbox("Settings Window", &show_settings_window);                         
                 ImGui::Text("Player");
                 ImGui::SameLine();
                 ImGui::Text(to_string(current_player + 1).c_str());
                 ImGui::SameLine();
-                ImGui::Text("turn");
-               
+                ImGui::Text("turn");                
                 if (times_rolled != 3) {
                     if (ImGui::Button("Roll?")) {
                         if (times_rolled != 3 && check_game_over(pointer) == false) {
@@ -609,7 +615,18 @@ int main(int, char**)
 
                 else if (Dice_5->is_locked == true) {
                     ImGui::Text("Locked");
-                }
+                };
+
+
+                if (ImGui::TreeNode("Options")) {
+                    if (ImGui::Button("End Game/Reset")) {
+                        GAMEOVER = true;
+                    }
+                    ImGui::NewLine();                   
+                    //ImGui::ShowStyleEditor();                    
+                    ImGui::TreePop();
+                };
+                
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
                 ImGui::End();
             }
@@ -622,35 +639,35 @@ int main(int, char**)
         ImGui::SetNextWindowSize(ImVec2(HELP_WINDOW().WIDTH, HELP_WINDOW().HEIGHT));
         ImGui::Begin("Help");
         if (ImGui::TreeNode("Rules")) {
-            TextWrapped("Beginning with the starting player, players will take turns one at a time in clockwise order. The game consists of thirteen rounds and at the end of the thirteenth round then the game will end. (All the categories on the players’ score cards will be completely filled in at that point.)");
-            TextWrapped("At the start of a turn, the player takes all 5 dice and rolls them. They can then roll some or all of the dice up to two more times, setting aside any dice they’d like to keep and rerolling the rest. The dice can be scored after any of the rolls, but scoring the dice ends the player’s turn. Setting dice aside after one roll does not prevent one or more of them from being rolled again on any subsequent roll if the player so chooses.");
-            TextWrapped("Each player’s goal is to try and score as high as they can in one of the thirteen categories shown on their score card.");
-            TextWrapped("To score the dice, the player selects one of the categories on their score card and writes the score into it. Each category can be scored only once per game (except for the Yahtzee category). Categories can be filled in any order. A player must score the dice on their turn even if it turns out that there are no good categories remaining to score in. Once a category is filled it may not be changed.");
-            TextWrapped("A player may write a score of zero in any category if they have rolled no point-generating results or if they simply choose to do so. For example, a player could put a roll of 2-4-5-6-6 into the Ones category even though it would score zero points.");
-            TextWrapped("After marking their score on their score card, the player’s turn ends and play proceeds to the player on their left. Or in the case of the game, the next player that has been determined through RNG.");
-            TreePop();
+            ImGui::TextWrapped("Beginning with the starting player, players will take turns one at a time in clockwise order. The game consists of thirteen rounds and at the end of the thirteenth round then the game will end. (All the categories on the players’ score cards will be completely filled in at that point.)");
+            ImGui::TextWrapped("At the start of a turn, the player takes all 5 dice and rolls them. They can then roll some or all of the dice up to two more times, setting aside any dice they’d like to keep and rerolling the rest. The dice can be scored after any of the rolls, but scoring the dice ends the player’s turn. Setting dice aside after one roll does not prevent one or more of them from being rolled again on any subsequent roll if the player so chooses.");
+            ImGui::TextWrapped("Each player’s goal is to try and score as high as they can in one of the thirteen categories shown on their score card.");
+            ImGui::TextWrapped("To score the dice, the player selects one of the categories on their score card and writes the score into it. Each category can be scored only once per game (except for the Yahtzee category). Categories can be filled in any order. A player must score the dice on their turn even if it turns out that there are no good categories remaining to score in. Once a category is filled it may not be changed.");
+            ImGui::TextWrapped("A player may write a score of zero in any category if they have rolled no point-generating results or if they simply choose to do so. For example, a player could put a roll of 2-4-5-6-6 into the Ones category even though it would score zero points.");
+            ImGui::TextWrapped("After marking their score on their score card, the player’s turn ends and play proceeds to the player on their left. Or in the case of the game, the next player that has been determined through RNG.");
+            ImGui::TreePop();
         };
         if (ImGui::TreeNode("Scoring")) {
-            Text("Three of a kind -> Three of the same dice.");
-            NewLine();
-            Text("Four of a kind -> Four of the same dice.");
-            NewLine();
-            TextWrapped("Full House -> Three Dice of the same number. And a pair that are a different number from the three matching.");
-            NewLine();
-            TextWrapped("Small (Sm) Straight -> Any four consecutive numbers. (for example, 1-2-3-4)");
-            NewLine();
-            TextWrapped("Large (Lg) Straight -> Any five consecutive numbers. (for example, 1-2-3-4-5)");
-            NewLine();
-            TextWrapped("Yahtzee (5 of a kind) -> All five dice showing the same number... Any yahtzee after the fist yahtzee is worth 100 points, use the Yahtzee Bonus slider");
-            NewLine();
-            Text("Chance -> add up the faces of all dice");
-            NewLine();
-            NewLine();
-            BulletText("Special Yahtzee Scoring");
-            TextWrapped("If a player rolls a Yahtzee on their turn but they have already filled in the Yahtzee category in a previous turn, then special scoring rules apply:\nIf the player has already filled in their Yahtzee box with a score of 50, they receive a Yahtzee bonus of 100 additional points. However, if their\nYahtzee box was previously filled in with a score of zero then they don’t receive the Yahtzee bonus.\n\nThe player then selects another category (other than the Yahtzee category) to score the dice as normal.");
-            TextWrapped("If the category in the Upper Section that corresponds to the numbers in the Yahtzee is unused, then the player must use that category.");
-            TextWrapped("If the corresponding box in the Upper Section has been used already then the player may choose to score one of the unused boxes in the Lower Section. In this case, the Yahtzee that the player has rolled acts as a \"Joker\" so that it can be placed in the Full House, Small Straight, and Large Straight categories if the player so wishes, even though it may not meet the standard requirements for those categories.");
-            TreePop();
+            ImGui::Text("Three of a kind -> Three of the same dice.");
+            ImGui::NewLine();
+            ImGui::Text("Four of a kind -> Four of the same dice.");
+            ImGui::NewLine();
+            ImGui::TextWrapped("Full House -> Three Dice of the same number. And a pair that are a different number from the three matching.");
+            ImGui::NewLine();
+            ImGui::TextWrapped("Small (Sm) Straight -> Any four consecutive numbers. (for example, 1-2-3-4)");
+            ImGui::NewLine();
+            ImGui::TextWrapped("Large (Lg) Straight -> Any five consecutive numbers. (for example, 1-2-3-4-5)");
+            ImGui::NewLine();
+            ImGui::TextWrapped("Yahtzee (5 of a kind) -> All five dice showing the same number... Any yahtzee after the fist yahtzee is worth 100 points, use the Yahtzee Bonus slider");
+            ImGui::NewLine();
+            ImGui::Text("Chance -> add up the faces of all dice");
+            ImGui::NewLine();
+            ImGui::NewLine();
+            ImGui::BulletText("Special Yahtzee Scoring");
+            ImGui::TextWrapped("If a player rolls a Yahtzee on their turn but they have already filled in the Yahtzee category in a previous turn, then special scoring rules apply:\nIf the player has already filled in their Yahtzee box with a score of 50, they receive a Yahtzee bonus of 100 additional points. However, if their\nYahtzee box was previously filled in with a score of zero then they don’t receive the Yahtzee bonus.\n\nThe player then selects another category (other than the Yahtzee category) to score the dice as normal.");
+            ImGui::TextWrapped("If the category in the Upper Section that corresponds to the numbers in the Yahtzee is unused, then the player must use that category.");
+            ImGui::TextWrapped("If the corresponding box in the Upper Section has been used already then the player may choose to score one of the unused boxes in the Lower Section. In this case, the Yahtzee that the player has rolled acts as a \"Joker\" so that it can be placed in the Full House, Small Straight, and Large Straight categories if the player so wishes, even though it may not meet the standard requirements for those categories.");
+            ImGui::TreePop();
         };
 
         ImGui::End();
@@ -685,27 +702,27 @@ int main(int, char**)
             }
 
             ImGui::Text((winner + " wins!").c_str());
-            Text("Score -> ");
-            SameLine();
-            Text(to_string(largest).c_str());
-            NewLine();
-            NewLine();
+            ImGui::Text("Score -> ");
+            ImGui::SameLine();
+            ImGui::Text(to_string(largest).c_str());
+            ImGui::NewLine();
+            ImGui::NewLine();
 
-            Text("Player 1 Score ->");
-            SameLine();
-            Text(to_string(P_1->total_score).c_str());
+            ImGui::Text("Player 1 Score ->");
+            ImGui::SameLine();
+            ImGui::Text(to_string(P_1->total_score).c_str());
 
-            Text("Player 2 Score ->");
-            SameLine();
-            Text(to_string(P_2->total_score).c_str());
+            ImGui::Text("Player 2 Score ->");
+            ImGui::SameLine();
+            ImGui::Text(to_string(P_2->total_score).c_str());
 
-            Text("Player 3 Score ->");
-            SameLine();
-            Text(to_string(P_3->total_score).c_str());
+            ImGui::Text("Player 3 Score ->");
+            ImGui::SameLine();
+            ImGui::Text(to_string(P_3->total_score).c_str());
 
-            Text("Player 4 Score ->");
-            SameLine();
-            Text(to_string(P_4->total_score).c_str());
+            ImGui::Text("Player 4 Score ->");
+            ImGui::SameLine();
+            ImGui::Text(to_string(P_4->total_score).c_str());
 
             if (Button("Play Again?")) {
                 P_1->reset();
@@ -732,7 +749,7 @@ int main(int, char**)
                 pointer = P_1;
                 ImGui::SetNextWindowPos(ImVec2(400 + 10, 5));
                 ImGui::SetNextWindowSize(ImVec2(CARD_SIZE().WIDTH, CARD_SIZE().HEIGHT));
-                ImGui::Begin("Player 1 score card");
+                ImGui::Begin("Player 1 score card", (bool*)false, ImGuiWindowFlags_NoResize);
                 ImGui::Text("Turns taken");
                 ImGui::SameLine();
                 ImGui::Text(to_string(pointer->turns_taken).c_str());
@@ -832,7 +849,7 @@ int main(int, char**)
                     HelpMarker("Grand Total of Upper");
 
                     pointer->upper_score = total_score_player_1_upper;
-                    TreePop();
+                    ImGui::TreePop();
                 };
 
                 if (ImGui::TreeNode("Lower Section")) {
@@ -932,7 +949,7 @@ int main(int, char**)
                     ImGui::Text(to_string(pointer->total_score).c_str());
                     ImGui::SameLine();
                     HelpMarker("Grand Total of both upper and lower");
-                    TreePop();
+                    ImGui::TreePop();
                 };
 
                 ImGui::End();
@@ -942,7 +959,7 @@ int main(int, char**)
             pointer = P_2;
             ImGui::SetNextWindowPos(ImVec2(400 + 10, 5));
             ImGui::SetNextWindowSize(ImVec2(CARD_SIZE().WIDTH, CARD_SIZE().HEIGHT));
-            ImGui::Begin("Player 2 score card");
+            ImGui::Begin("Player 2 score card", (bool*)false, ImGuiWindowFlags_NoResize);
             ImGui::Text("Turns taken");
             ImGui::SameLine();
             ImGui::Text(to_string(pointer->turns_taken).c_str());
@@ -1042,7 +1059,7 @@ int main(int, char**)
                 HelpMarker("Grand Total of Upper");
 
                 pointer->upper_score = total_score_player_1_upper;
-                TreePop();
+                ImGui::TreePop();
             };
 
             if (ImGui::TreeNode("Lower Section")) {
@@ -1142,7 +1159,7 @@ int main(int, char**)
                 ImGui::Text(to_string(pointer->total_score).c_str());
                 ImGui::SameLine();
                 HelpMarker("Grand Total of both upper and lower");
-                TreePop();
+                ImGui::TreePop();
             };
 
             ImGui::End();
@@ -1152,7 +1169,7 @@ int main(int, char**)
             pointer = P_3;
             ImGui::SetNextWindowPos(ImVec2(400 + 10, 5));
             ImGui::SetNextWindowSize(ImVec2(CARD_SIZE().WIDTH, CARD_SIZE().HEIGHT));
-            ImGui::Begin("Player 3 score card");
+            ImGui::Begin("Player 3 score card", (bool*)false, ImGuiWindowFlags_NoResize);
             ImGui::Text("Turns taken");
             ImGui::SameLine();
             ImGui::Text(to_string(pointer->turns_taken).c_str());
@@ -1252,7 +1269,7 @@ int main(int, char**)
                 HelpMarker("Grand Total of Upper");
 
                 pointer->upper_score = total_score_player_1_upper;
-                TreePop();
+                ImGui::TreePop();
             };
 
             if (ImGui::TreeNode("Lower Section")) {
@@ -1352,7 +1369,7 @@ int main(int, char**)
                 ImGui::Text(to_string(pointer->total_score).c_str());
                 ImGui::SameLine();
                 HelpMarker("Grand Total of both upper and lower");
-                TreePop();
+                ImGui::TreePop();
             };
 
             ImGui::End();
@@ -1362,7 +1379,7 @@ int main(int, char**)
             pointer = P_4;
             ImGui::SetNextWindowPos(ImVec2(400 + 10, 5));
             ImGui::SetNextWindowSize(ImVec2(CARD_SIZE().WIDTH, CARD_SIZE().HEIGHT));
-            ImGui::Begin("Player 4 score card");
+            ImGui::Begin("Player 4 score card", (bool*)false, ImGuiWindowFlags_NoResize);
             ImGui::Text("Turns taken");
             ImGui::SameLine();
             ImGui::Text(to_string(pointer->turns_taken).c_str());
@@ -1462,7 +1479,7 @@ int main(int, char**)
                 HelpMarker("Grand Total of Upper");
 
                 pointer->upper_score = total_score_player_1_upper;
-                TreePop();
+                ImGui::TreePop();
             };
 
             if (ImGui::TreeNode("Lower Section")) {
@@ -1562,7 +1579,7 @@ int main(int, char**)
                 ImGui::Text(to_string(pointer->total_score).c_str());
                 ImGui::SameLine();
                 HelpMarker("Grand Total of both upper and lower");
-                TreePop();
+                ImGui::TreePop();
             };
 
             ImGui::End();
@@ -1647,6 +1664,7 @@ bool CreateDeviceD3D(HWND hWnd)
 
     return true;
 }
+
 
 void CleanupDeviceD3D()
 {
