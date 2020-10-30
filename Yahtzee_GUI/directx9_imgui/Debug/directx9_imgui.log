@@ -7,31 +7,31 @@
   imgui_widgets.cpp
   main.cpp
 C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(4,9): warning C4068: unknown pragma 'disable'
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(156,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
 C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(157,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
 C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(158,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
 C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(159,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
 C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(160,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
 C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(161,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
 C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(162,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(165,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(163,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
 C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(166,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
 C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(167,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
 C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(168,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
 C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(169,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
 C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(170,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
 C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(171,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(402,74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(589,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(590,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(590,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(702,79): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(702,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(912,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(912,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(1122,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(1122,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(1332,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(1332,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(172,1): warning C4302: 'type cast': truncation from 'const char *' to 'char'
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(442,74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(638,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(639,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(639,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(751,79): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(751,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(961,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(961,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(1171,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(1171,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(1381,75): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\directx9_imgui\main.cpp(1381,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Generating Code...
   directx9_imgui.vcxproj -> C:\Users\apple\Documents\Code\C++\Yahtzee_GUI\Debug\Yahtzee_Gui.exe
