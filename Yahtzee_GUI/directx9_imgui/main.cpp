@@ -5,6 +5,8 @@
 #include "imgui.h"
 using namespace ImGui;
 
+#include "Yahtzee_header.h"
+#include <stdio.h>
 #include <random>
 #include <chrono>
 #include <string>
@@ -628,6 +630,9 @@ int main(int, char**)
                 };
                 
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+               
+                ImGui::Text("RAM usage: %%%1.1f", usage::memory());
                 ImGui::End();
             }
         }
