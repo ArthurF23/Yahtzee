@@ -14,3 +14,5 @@ I'm not very good at coding so if anyone has any tips i'm all ears!
 The game functions just how Yahtzee is played, you can lock dice to prevent them from being rolled again and you can roll a total of 3 times, the first of which you cannot lock any dice. Please let me know if there are any issues.
 
 I am really liking the ImGui header and as a beginner i'd recommend it, it's really easy to use.
+
+11/1/20: ImGui is having trouble with the building Debug so I won't be updating it anymore... 
