@@ -566,7 +566,7 @@ int main(int, char**)
                         Dice_5->reset();
                     }
                     ImGui::SameLine();
-                    thread help_thread_1(HelpMarker, "Next Player's turn");
+                    thread help_thread_1(HelpMarker, "Next Player's turn\nAll inputs that are not \"0\" are final and cannot be changed after this turn.\nIf you do not want to keep that input, please replace it with \"0\" on your score card.");
                     help_thread_1.join();
                 }
                 
