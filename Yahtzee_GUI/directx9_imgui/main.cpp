@@ -311,7 +311,7 @@ struct STYLE {
 //static char player_1_inputs_4[1024 * 16] = "0";
 
 //static char player_1_inputs_5[1024 * 16] = "0";
-
+bool confirmation = false;
 // Main code
 int main(int, char**)
 {
@@ -439,7 +439,7 @@ int main(int, char**)
         {
             static float f = 0.0f;
             static int counter = 0;
-            if (show_config_window == false && GAMEOVER == false) {
+            if (show_config_window == false && GAMEOVER == false && confirmation == false) {
                 ImGui::SetNextWindowPos(ImVec2(10, 5));
                 ImGui::SetNextWindowSize(ImVec2(400, MAINWINDOW().HEIGHT - 100));
                 ImGui::Begin("Game", (bool*)false, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);                          // Create a window called "Hello, world!" and append into it.
@@ -455,7 +455,7 @@ int main(int, char**)
                 ImGui::SameLine();
                 ImGui::Text("turn");                
                 if (times_rolled != 3) {
-                    if (ImGui::Button("Roll?")) {
+                    if (ImGui::Button("Roll?")) {                       
                         if (times_rolled != 3 && check_game_over(pointer) == false) {
                             if (Dice_1->is_locked == false) {
                                 Dice_1->roll();
@@ -483,10 +483,13 @@ int main(int, char**)
                             times_rolled = times_rolled;                            
                         };
                     }
+                    ImGui::SameLine();
+                    thread help_thread_1(HelpMarker, "Roll Dice");
+                    help_thread_1.join();
                 }
                 //Dice Rendering
                 else {
-                    if (ImGui::Button("Next Player's turn")) {
+                    if (ImGui::Button("Next Player's turn")) {                       
                         times_rolled = 0;                        
                         shift_player();
                         Dice_1->reset();
@@ -495,10 +498,11 @@ int main(int, char**)
                         Dice_4->reset();
                         Dice_5->reset();
                     }
+                    ImGui::SameLine();
+                    thread help_thread_1(HelpMarker, "Next Player's turn");
+                    help_thread_1.join();
                 }
-                ImGui::SameLine();
-                thread help_thread_1(HelpMarker, "Roll Dice");
-                help_thread_1.join();
+                
                 //Dice controls
 
                 //DICE 1
@@ -524,7 +528,8 @@ int main(int, char**)
                 else if (Dice_1->is_locked == true) {
                     ImGui::Text("Locked");
                 }
-
+                ImGui::SameLine();
+                HelpMarker("If a dice is locked, it will not re-roll");
 
                 //DICE 2
                 if (ImGui::Button("Keep Dice 2")) {
@@ -572,7 +577,7 @@ int main(int, char**)
                 else if (Dice_3->is_locked == true) {
                     ImGui::Text("Locked");
                 }
-
+               
                 //DICE 4
                 if (ImGui::Button("Keep Dice 4")) {
                     if (Dice_4->is_locked == true) {
@@ -621,28 +626,51 @@ int main(int, char**)
 
 
                 if (ImGui::TreeNode("Options")) {
+                    
                     if (ImGui::Button("End Game/Reset")) {
-                        GAMEOVER = true;
-                    }
-                    ImGui::NewLine();                   
+                        confirmation = true;
+                    }          
+                    
                     //ImGui::ShowStyleEditor();                    
                     ImGui::TreePop();
-                };
-                
-                ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
-               
-                ImGui::Text("RAM usage: %%%1.1f", usage::memory());
+                };                           
                 ImGui::End();
             }
         }
 
+        if (confirmation == true) {
+            ImGui::Begin("Confirmation");
+            ImGui::Text("Are you sure");
+            if (ImGui::Button("Yes")) {
+                GAMEOVER = true;
+                confirmation = false;
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("No")) {
+                confirmation = false;
+            }
+            ImGui::End();
+        }
 
         {
+        //Stats Window
+        ImGui::SetNextWindowPos(ImVec2(400 + 10, 5 + CARD_SIZE().HEIGHT));
+        ImGui::SetNextWindowSize(ImVec2(CARD_SIZE().WIDTH, (MAINWINDOW().HEIGHT - CARD_SIZE().HEIGHT) - 100));
+        ImGui::Begin("Stats", (bool*)false, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+
+        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+        ImGui::Text("RAM usage: %1.2f MB (%%%1.2f)", usage::memory(), usage::memory_percent());
+
+        ImGui::End();
+        }
+
+        
+        if (show_config_window == false && confirmation == false && GAMEOVER == false){
         //Help Window
         ImGui::SetNextWindowPos(ImVec2(400 + 10 + CARD_SIZE().WIDTH, 5));
         ImGui::SetNextWindowSize(ImVec2(HELP_WINDOW().WIDTH, HELP_WINDOW().HEIGHT));
-        ImGui::Begin("Help");
+        ImGui::Begin("Help", (bool*)false, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
         if (ImGui::TreeNode("Rules")) {
             ImGui::TextWrapped("Beginning with the starting player, players will take turns one at a time in clockwise order. The game consists of thirteen rounds and at the end of the thirteenth round then the game will end. (All the categories on the players’ score cards will be completely filled in at that point.)");
             ImGui::TextWrapped("At the start of a turn, the player takes all 5 dice and rolls them. They can then roll some or all of the dice up to two more times, setting aside any dice they’d like to keep and rerolling the rest. The dice can be scored after any of the rolls, but scoring the dice ends the player’s turn. Setting dice aside after one roll does not prevent one or more of them from being rolled again on any subsequent roll if the player so chooses.");
@@ -746,9 +774,8 @@ int main(int, char**)
             ImGui::End();
         }
 
-
         //Player 1 score card
-        if (show_config_window == false && GAMEOVER == false) {        
+        if (show_config_window == false && GAMEOVER == false && confirmation == false) {
 
             if (current_player == 0) {
                 pointer = P_1;
