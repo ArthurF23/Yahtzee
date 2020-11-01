@@ -808,92 +808,92 @@ int main(int, char**)
             string fourth;
             //Finds who has the largest score then filters to get the largest to smallest numbers
             if (largest == scores[0]) {
-                scores[0] = 0;
+                scores[0] = -1;
                 winner = "Player 1";
             }
 
             else if (largest == scores[1]) {
-                scores[1] = 0;
+                scores[1] = -1;
                 winner = "Player 2";
 
             }
 
             else if (largest == scores[2]) {
-                scores[2] = 0;
+                scores[2] = -1;
                 winner = "Player 3";
             }
 
             else if (largest == scores[3]) {
-                scores[3] = 0;
+                scores[3] = -1;
                 winner = "Player 4";
             }
 
             const int second_largest = (scores[0] > scores[1]) ? (scores[0] > scores[2]) ? (scores[0] > scores[3]) ? scores[0] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3] : (scores[1] > scores[2]) ? (scores[1] > scores[3]) ? scores[1] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3];
 
             if (second_largest == scores[0]) {
-                scores[0] = 0;
+                scores[0] = -1;
                 second = "Player 1";
             }
 
             else if (second_largest == scores[1]) {
-                scores[1] = 0;
+                scores[1] = -1;
                 second = "Player 2";
 
             }
 
             else if (second_largest == scores[2]) {
-                scores[2] = 0;
+                scores[2] = -1;
                 second = "Player 3";
             }
 
             else if (second_largest == scores[3]) {
-                scores[3] = 0;
+                scores[3] = -1;
                 second = "Player 4";
             }
 
             const int third_largest = (scores[0] > scores[1]) ? (scores[0] > scores[2]) ? (scores[0] > scores[3]) ? scores[0] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3] : (scores[1] > scores[2]) ? (scores[1] > scores[3]) ? scores[1] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3];
 
             if (third_largest == scores[0]) {
-                scores[0] = 0;
+                scores[0] = -1;
                 third = "Player 1";
             }
 
             else if (third_largest == scores[1]) {
-                scores[1] = 0;
+                scores[1] = -1;
                 third = "Player 2";
 
             }
 
             else if (third_largest == scores[2]) {
-                scores[2] = 0;
+                scores[2] = -1;
                 third = "Player 3";
             }
 
             else if (third_largest == scores[3]) {
-                scores[3] = 0;
+                scores[3] = -1;
                 third = "Player 4";
             }
 
             const int fourth_largest = (scores[0] > scores[1]) ? (scores[0] > scores[2]) ? (scores[0] > scores[3]) ? scores[0] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3] : (scores[1] > scores[2]) ? (scores[1] > scores[3]) ? scores[1] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3];
 
             if (fourth_largest == scores[0]) {
-                scores[0] = 0;
+                scores[0] = -1;
                 fourth = "Player 1";
             }
 
             else if (fourth_largest == scores[1]) {
-                scores[1] = 0;
+                scores[1] = -1;
                 fourth = "Player 2";
 
             }
 
             else if (fourth_largest == scores[2]) {
-                scores[2] = 0;
+                scores[2] = -1;
                 fourth = "Player 3";
             }
 
             else if (fourth_largest == scores[3]) {
-                scores[3] = 0;
+                scores[3] = -1;
                 fourth = "Player 4";
             }
 
