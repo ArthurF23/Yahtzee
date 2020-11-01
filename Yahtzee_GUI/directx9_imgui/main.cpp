@@ -803,23 +803,100 @@ int main(int, char**)
             const int largest = (scores[0] > scores[1]) ? (scores[0] > scores[2]) ? (scores[0] > scores[3]) ? scores[0] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3] : (scores[1] > scores[2]) ? (scores[1] > scores[3]) ? scores[1] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3];
             
             string winner;
-            //Finds who has the largest score
+            string second;
+            string third;
+            string fourth;
+            //Finds who has the largest score then filters to get the largest to smallest numbers
             if (largest == scores[0]) {
+                scores[0] = 0;
                 winner = "Player 1";
             }
 
             else if (largest == scores[1]) {
+                scores[1] = 0;
                 winner = "Player 2";
 
             }
 
             else if (largest == scores[2]) {
+                scores[2] = 0;
                 winner = "Player 3";
             }
 
             else if (largest == scores[3]) {
+                scores[3] = 0;
                 winner = "Player 4";
             }
+
+            const int second_largest = (scores[0] > scores[1]) ? (scores[0] > scores[2]) ? (scores[0] > scores[3]) ? scores[0] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3] : (scores[1] > scores[2]) ? (scores[1] > scores[3]) ? scores[1] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3];
+
+            if (second_largest == scores[0]) {
+                scores[0] = 0;
+                second = "Player 1";
+            }
+
+            else if (second_largest == scores[1]) {
+                scores[1] = 0;
+                second = "Player 2";
+
+            }
+
+            else if (second_largest == scores[2]) {
+                scores[2] = 0;
+                second = "Player 3";
+            }
+
+            else if (second_largest == scores[3]) {
+                scores[3] = 0;
+                second = "Player 4";
+            }
+
+            const int third_largest = (scores[0] > scores[1]) ? (scores[0] > scores[2]) ? (scores[0] > scores[3]) ? scores[0] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3] : (scores[1] > scores[2]) ? (scores[1] > scores[3]) ? scores[1] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3];
+
+            if (third_largest == scores[0]) {
+                scores[0] = 0;
+                third = "Player 1";
+            }
+
+            else if (third_largest == scores[1]) {
+                scores[1] = 0;
+                third = "Player 2";
+
+            }
+
+            else if (third_largest == scores[2]) {
+                scores[2] = 0;
+                third = "Player 3";
+            }
+
+            else if (third_largest == scores[3]) {
+                scores[3] = 0;
+                third = "Player 4";
+            }
+
+            const int fourth_largest = (scores[0] > scores[1]) ? (scores[0] > scores[2]) ? (scores[0] > scores[3]) ? scores[0] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3] : (scores[1] > scores[2]) ? (scores[1] > scores[3]) ? scores[1] : scores[3] : (scores[2] > scores[3]) ? scores[2] : scores[3];
+
+            if (fourth_largest == scores[0]) {
+                scores[0] = 0;
+                fourth = "Player 1";
+            }
+
+            else if (fourth_largest == scores[1]) {
+                scores[1] = 0;
+                fourth = "Player 2";
+
+            }
+
+            else if (fourth_largest == scores[2]) {
+                scores[2] = 0;
+                fourth = "Player 3";
+            }
+
+            else if (fourth_largest == scores[3]) {
+                scores[3] = 0;
+                fourth = "Player 4";
+            }
+
 
             ImGui::Text((winner + " wins!").c_str());
             ImGui::Text("Score -> ");
@@ -828,21 +905,21 @@ int main(int, char**)
             ImGui::NewLine();
             ImGui::NewLine();
 
-            ImGui::Text("Player 1 Score ->");
+            ImGui::Text((winner + " Score ->").c_str());
             ImGui::SameLine();
-            ImGui::Text(to_string(P_1->total_score).c_str());
+            ImGui::Text(to_string(largest).c_str());
 
-            ImGui::Text("Player 2 Score ->");
+            ImGui::Text((second + " Score ->").c_str());
             ImGui::SameLine();
-            ImGui::Text(to_string(P_2->total_score).c_str());
+            ImGui::Text(to_string(second_largest).c_str());
 
-            ImGui::Text("Player 3 Score ->");
+            ImGui::Text((third + " Score ->").c_str());
             ImGui::SameLine();
-            ImGui::Text(to_string(P_3->total_score).c_str());
+            ImGui::Text(to_string(third_largest).c_str());
 
-            ImGui::Text("Player 4 Score ->");
+            ImGui::Text((fourth + " Score ->").c_str());
             ImGui::SameLine();
-            ImGui::Text(to_string(P_4->total_score).c_str());
+            ImGui::Text(to_string(fourth_largest).c_str());
 
             if (Button("Play Again?")) {
                 P_1->reset();
