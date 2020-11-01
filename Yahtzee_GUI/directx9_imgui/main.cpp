@@ -58,15 +58,15 @@ static void HelpMarker(const char* desc)
     }
 }
 
-int random_generator(int x, int y) {    
+int random_generator(int min, int max) {    
     std::random_device rd;     // only used once to initialise (seed) engine
     std::mt19937 rng(rd());    // random-number engine used (Mersenne-Twister in this case)
-    std::uniform_int_distribution<int> uni(x, y); // guaranteed unbiased
+    std::uniform_int_distribution<int> uni(min, max); // guaranteed unbiased
     int random_int = uni(rng);  
     //cout << x << " " << y << " " << random_int << endl;
-    if (random_int < x || random_int > y) {
+    if (random_int < min || random_int > max) {
         //cout << "RETURN" << endl;
-        return random_generator(x, y);
+        return random_generator(min, max);
     }
 
     return random_int;
@@ -107,7 +107,6 @@ public:
 
 class player {
 public:   
-
     int turns_taken = 0;
 
     atomic<int> upper_score = 0;
@@ -633,8 +632,31 @@ int main(int, char**)
                     
                     //ImGui::ShowStyleEditor();                    
                     ImGui::TreePop();
-                };                           
-                ImGui::End();
+                };
+                ImGui::NewLine();
+                ImGui::NewLine();
+                ImGui::Text("Player Order");
+                if (player_num >= 1) {
+                    ImGui::Text("Player ");
+                    ImGui::SameLine();
+                    ImGui::Text(to_string(player_order[0] + 1).c_str());
+                };
+                if (player_num >= 2) {
+                    ImGui::Text("Player ");
+                    ImGui::SameLine();
+                    ImGui::Text(to_string(player_order[1] + 1).c_str());
+                };
+                if (player_num >= 3) {
+                    ImGui::Text("Player ");
+                    ImGui::SameLine();
+                    ImGui::Text(to_string(player_order[2] + 1).c_str());
+                };
+                if (player_num >= 4) {
+                    ImGui::Text("Player ");
+                    ImGui::SameLine();
+                    ImGui::Text(to_string(player_order[3] + 1).c_str());
+                    ImGui::End();
+                };
             }
         }
 
