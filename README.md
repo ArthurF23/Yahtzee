@@ -15,4 +15,4 @@ The game functions just how Yahtzee is played, you can lock dice to prevent them
 
 I am really liking the ImGui header and as a beginner i'd recommend it, it's really easy to use.
 
-11/1/20: ImGui is having trouble with the building Debug so I won't be updating it anymore... 
+11/1/20: ImGui is having trouble with the building Debug so I won't be updating it anymore... It's something to do with the ImGui::PushStyleColor(); but I am unsure of how to fix it.
