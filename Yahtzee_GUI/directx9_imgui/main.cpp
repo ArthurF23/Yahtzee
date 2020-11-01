@@ -115,6 +115,27 @@ public:
 
     atomic<int> total_score = 0;
 
+
+    ImGuiInputTextFlags input_1_flags;
+
+    ImGuiInputTextFlags input_2_flags;
+
+    ImGuiInputTextFlags input_3_flags;
+
+    ImGuiInputTextFlags input_4_flags;
+
+    ImGuiInputTextFlags input_5_flags;
+
+    ImGuiInputTextFlags input_6_flags;
+
+    ImGuiInputTextFlags input_3ofkind_flags;
+
+    ImGuiInputTextFlags input_4ofkind_flags;
+
+    ImGuiInputTextFlags input_chance_flags;
+
+    char player_inputs_placeholder[1024 * 16] = "0";
+
     char player_inputs_1[1024 * 16] = "0";
 
     char player_inputs_2[1024 * 16] = "0";
@@ -143,6 +164,44 @@ public:
 
     int yahtzee_bonus = 0;
 
+    void check_inputs() {
+        if (player_inputs_1[0] != player_inputs_placeholder[0]) {
+            input_1_flags = ImGuiInputTextFlags_ReadOnly;
+        };
+
+        if (player_inputs_2[0] != player_inputs_placeholder[0]) {
+            input_2_flags = ImGuiInputTextFlags_ReadOnly;
+        };
+
+        if (player_inputs_3[0] != player_inputs_placeholder[0]) {
+            input_3_flags = ImGuiInputTextFlags_ReadOnly;
+        };
+
+        if (player_inputs_4[0] != player_inputs_placeholder[0]) {
+            input_4_flags = ImGuiInputTextFlags_ReadOnly;
+        };
+
+        if (player_inputs_5[0] != player_inputs_placeholder[0]) {
+            input_5_flags = ImGuiInputTextFlags_ReadOnly;
+        };
+
+        if (player_inputs_6[0] != player_inputs_placeholder[0]) {
+            input_6_flags = ImGuiInputTextFlags_ReadOnly;
+        };
+
+        if (three_of_kind[0] != player_inputs_placeholder[0]) {
+            input_3ofkind_flags = ImGuiInputTextFlags_ReadOnly;
+        };
+
+        if (four_of_kind[0] != player_inputs_placeholder[0]) {
+            input_4ofkind_flags = ImGuiInputTextFlags_ReadOnly;
+        };
+
+        if (chance[0] != player_inputs_placeholder[0]) {
+            input_chance_flags = ImGuiInputTextFlags_ReadOnly;
+        };
+    }
+
     void reset() {
         turns_taken = 0;
         upper_score = 0;
@@ -153,6 +212,16 @@ public:
         lg_straight = false;
         scored_yahtzee = false;
         yahtzee_bonus = 0;
+        input_1_flags = NULL;
+        input_2_flags = NULL;
+        input_3_flags = NULL;
+        input_4_flags = NULL;
+        input_5_flags = NULL;
+        input_6_flags = NULL;
+        input_3ofkind_flags = NULL;
+        input_4ofkind_flags = NULL;
+        input_chance_flags = NULL;
+
         for (int i = 0; i < 1024 * 16; i++) {
             if (i == 0) {
                 player_inputs_1[i] = (char)"0";
@@ -275,7 +344,8 @@ void shift_player() {
 
     }    
     else {    
-        pointer->turns_taken++;
+        pointer->turns_taken++;        
+        pointer->check_inputs();
         if (increment >= player_num - 1) {
             
             increment = 0;
@@ -322,7 +392,7 @@ int main(int, char**)
     P_2 = new player;
     P_3 = new player;
     P_4 = new player;
-    
+
     player* players[4] = {P_1, P_2, P_3, P_4};
     /*for (int i = 0; i < player_num; i++) {
         players[player_order[i]] = player();
@@ -828,7 +898,7 @@ int main(int, char**)
             default:
                 return 3;
             }
-
+            
             ImGui::SetNextWindowPos(ImVec2(400 + 10, 5));
             ImGui::SetNextWindowSize(ImVec2(CARD_SIZE().WIDTH, CARD_SIZE().HEIGHT));
             ImGui::Begin(title.c_str(), (bool*)false, ImGuiWindowFlags_NoResize);
@@ -841,8 +911,8 @@ int main(int, char**)
                 HelpMarker("Count and add only Aces");
                 ImGui::SameLine();
                 ImGui::Text("Aces:  ");
-                ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
-                ImGui::InputText(" ", pointer->player_inputs_1, IM_ARRAYSIZE(pointer->player_inputs_1));
+                ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))                          
+                ImGui::InputText(" ", pointer->player_inputs_1, IM_ARRAYSIZE(pointer->player_inputs_1), pointer->input_1_flags);
 
 
                 //ImGui::NewLine();
@@ -852,7 +922,7 @@ int main(int, char**)
 
                 ImGui::SameLine();
 
-                ImGui::InputText("  ", pointer->player_inputs_2, IM_ARRAYSIZE(pointer->player_inputs_2));
+                ImGui::InputText("  ", pointer->player_inputs_2, IM_ARRAYSIZE(pointer->player_inputs_2), pointer->input_2_flags);
 
 
                 HelpMarker("Count and add only Threes");
@@ -860,7 +930,7 @@ int main(int, char**)
                 //ImGui::InputTextWithHint("Twos", "input", player_1_inputs, IM_ARRAYSIZE(player_1_inputs), ImGuiInputTextFlags_Password);
                 ImGui::Text("Threes:");
                 ImGui::SameLine();
-                ImGui::InputText("   ", pointer->player_inputs_3, IM_ARRAYSIZE(pointer->player_inputs_3));
+                ImGui::InputText("   ", pointer->player_inputs_3, IM_ARRAYSIZE(pointer->player_inputs_3), pointer->input_3_flags);
 
 
 
@@ -868,7 +938,7 @@ int main(int, char**)
                 ImGui::SameLine();
                 ImGui::Text("Fours: ");
                 ImGui::SameLine();
-                ImGui::InputText("    ", pointer->player_inputs_4, IM_ARRAYSIZE(pointer->player_inputs_4));
+                ImGui::InputText("    ", pointer->player_inputs_4, IM_ARRAYSIZE(pointer->player_inputs_4), pointer->input_4_flags);
 
 
 
@@ -876,7 +946,7 @@ int main(int, char**)
                 ImGui::SameLine();
                 ImGui::Text("Fives: ");
                 ImGui::SameLine();
-                ImGui::InputText("     ", pointer->player_inputs_5, IM_ARRAYSIZE(pointer->player_inputs_5));
+                ImGui::InputText("     ", pointer->player_inputs_5, IM_ARRAYSIZE(pointer->player_inputs_5), pointer->input_5_flags);
 
 
 
@@ -884,7 +954,7 @@ int main(int, char**)
                 ImGui::SameLine();
                 ImGui::Text("Sixes: ");
                 ImGui::SameLine();
-                ImGui::InputText("      ", pointer->player_inputs_6, IM_ARRAYSIZE(pointer->player_inputs_6));
+                ImGui::InputText("      ", pointer->player_inputs_6, IM_ARRAYSIZE(pointer->player_inputs_6), pointer->input_6_flags);
 
 
 
@@ -940,7 +1010,7 @@ int main(int, char**)
                 ImGui::SameLine();
                 ImGui::Text("3 of a kind:  ");
                 ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
-                ImGui::InputText(" ", pointer->three_of_kind, IM_ARRAYSIZE(pointer->three_of_kind));
+                ImGui::InputText(" ", pointer->three_of_kind, IM_ARRAYSIZE(pointer->three_of_kind), pointer->input_3ofkind_flags);
 
 
 
@@ -948,7 +1018,7 @@ int main(int, char**)
                 ImGui::SameLine();
                 ImGui::Text("4 of a kind:  ");
                 ImGui::SameLine();//((int)(sizeof(player_1_inputs) / sizeof(*(player_1_inputs))))            
-                ImGui::InputText("  ", pointer->four_of_kind, IM_ARRAYSIZE(pointer->four_of_kind));
+                ImGui::InputText("  ", pointer->four_of_kind, IM_ARRAYSIZE(pointer->four_of_kind) , pointer->input_4ofkind_flags);
 
 
 
@@ -978,7 +1048,7 @@ int main(int, char**)
                 ImGui::SameLine();
                 ImGui::Text("Chance");
                 ImGui::SameLine();
-                ImGui::InputText("        ", pointer->chance, IM_ARRAYSIZE(pointer->chance));
+                ImGui::InputText("        ", pointer->chance, IM_ARRAYSIZE(pointer->chance), pointer->input_chance_flags);
 
 
                 HelpMarker("Score +100 each (max 4)");
